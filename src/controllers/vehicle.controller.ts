@@ -1,7 +1,7 @@
 // backend/src/controllers/vehicle.controller.ts
 
 import { Request, Response } from 'express';
-import prisma from '../lib/prisma';
+import prisma from '../lib/prisma.js';
 import { Prisma } from '@prisma/client';
 import { io } from '../server';
 import slugify from "slugify";   // ✅ ADD SLUGIFY
