@@ -9,7 +9,7 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "start:prod": "npm run build && node dist/server.js",
-    "prisma:generate": "prisma generate",
+    "prisma:generate": "node --no-warnings ./node_modules/prisma/build/index.js generate",
     "prisma:push": "prisma db push",
     "prisma:studio": "prisma studio",
     "prisma:seed": "tsx prisma/seed.ts"
