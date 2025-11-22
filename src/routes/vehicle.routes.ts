@@ -17,7 +17,7 @@ const router = Router();
 // ============================
 // PUBLIC ROUTES
 // ============================
-router.get('/', getAllVehicles);
+router.get('/', getAllVehicles);  
 router.get('/featured', getFeaturedVehicles);
 router.get('/search', searchVehicles);
 router.get('/:slug', getVehicleBySlug);

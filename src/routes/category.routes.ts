@@ -4,7 +4,8 @@
 
 import { Router } from "express";
 import { PrismaClient } from "@prisma/client";
-import { authenticateUser, requireAdmin } from "../middleware/auth";
+import { authenticateUser, requireAdmin } from "../middleware/auth.js";
+
 
 const router = Router();
 const prisma = new PrismaClient();

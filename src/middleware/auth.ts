@@ -1,3 +1,4 @@
+//backend/src/middleware/auth.ts
 import { Request, Response, NextFunction } from 'express';
 import { clerkClient } from '@clerk/clerk-sdk-node';
 
