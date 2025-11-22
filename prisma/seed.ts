@@ -1,8 +1,31 @@
-/// <reference types="node" />
-import { PrismaClient, Prisma } from "@prisma/client";
+import { prisma } from "../src/lib/prisma"; // use existing prisma client
+import { Prisma } from "@prisma/client";
 import slugify from "slugify";
 
-const prisma = new PrismaClient();
+// Explicit type for vehicles to avoid "any[]"
+type SeedVehicle = {
+  brand: string;
+  model: string;
+  year: number;
+  variant: string;
+  cashPrice: string;
+  downPayment: string;
+  monthlyPayment: string;
+  leaseTerm: number;
+  transmission: string;
+  fuelType: string;
+  engineSize: string;
+  horsepower: number;
+  seatingCapacity: number;
+  features: string[];
+  specifications: Record<string, string>;
+  description: string;
+  thumbnailUrl: string;
+  videos: string[];
+  availability: string;
+  categoryId: string;
+  featured?: boolean;
+};
 
 async function main() {
   console.log("🌱 Seeding database...");
@@ -51,7 +74,7 @@ async function main() {
   // ======================================================
   // 2. Categories
   // ======================================================
-  const categories = await prisma.category.createMany({
+  await prisma.category.createMany({
     data: [
       { name: "Sedan", slug: "sedan", order: 1 },
       { name: "SUV", slug: "suv", order: 2 },
@@ -65,9 +88,9 @@ async function main() {
   const hatch = await prisma.category.findUnique({ where: { slug: "hatchback" } });
 
   // ======================================================
-  // 3. Vehicles (MEDIUM SET)
+  // 3. Vehicles
   // ======================================================
-  const vehiclesData = [
+  const vehiclesData: SeedVehicle[] = [
     {
       brand: "Toyota",
       model: "Vios",
@@ -88,7 +111,7 @@ async function main() {
       thumbnailUrl: "/cars/vios-thumb.jpg",
       videos: [],
       availability: "Same Day Release",
-      categoryId: sedan?.id!,
+      categoryId: sedan!.id,
       featured: true,
     },
     {
@@ -111,7 +134,7 @@ async function main() {
       thumbnailUrl: "/cars/city-thumb.jpg",
       videos: [],
       availability: "1 Day Release",
-      categoryId: sedan?.id!,
+      categoryId: sedan!.id,
     },
     {
       brand: "Mitsubishi",
@@ -133,7 +156,7 @@ async function main() {
       thumbnailUrl: "/cars/xpander-thumb.jpg",
       videos: [],
       availability: "3 Days Release",
-      categoryId: suv?.id!,
+      categoryId: suv!.id,
     },
     {
       brand: "Toyota",
@@ -155,8 +178,8 @@ async function main() {
       thumbnailUrl: "/cars/fortuner-thumb.jpg",
       videos: [],
       availability: "Same Day Release",
+      categoryId: suv!.id,
       featured: true,
-      categoryId: suv?.id!,
     },
     {
       brand: "Suzuki",
@@ -178,7 +201,7 @@ async function main() {
       thumbnailUrl: "/cars/swift-thumb.jpg",
       videos: [],
       availability: "Same Day Release",
-      categoryId: hatch?.id!,
+      categoryId: hatch!.id,
     },
     {
       brand: "Kia",
@@ -200,7 +223,7 @@ async function main() {
       thumbnailUrl: "/cars/stonic-thumb.jpg",
       videos: [],
       availability: "Same Day Release",
-      categoryId: suv?.id!,
+      categoryId: suv!.id,
     },
     {
       brand: "Ford",
@@ -222,7 +245,7 @@ async function main() {
       thumbnailUrl: "/cars/ranger-thumb.jpg",
       videos: [],
       availability: "Same Day Release",
-      categoryId: suv?.id!,
+      categoryId: suv!.id,
     },
     {
       brand: "Hyundai",
@@ -244,7 +267,7 @@ async function main() {
       thumbnailUrl: "/cars/tucson-thumb.jpg",
       videos: [],
       availability: "1 Day Release",
-      categoryId: suv?.id!,
+      categoryId: suv!.id,
     },
   ];
 
@@ -277,7 +300,7 @@ async function main() {
   }
 
   // ======================================================
-  // 4. Branch Inventory (YES)
+  // 4. Branch Inventory
   // ======================================================
   const allBranches = [qc, makati, cebu];
 
