@@ -4,14 +4,14 @@
 node_modules/
 
 # ============================================
-# Environment Files (MUST NOT BE COMMITTED)
+# Environment Files
 # ============================================
 .env
 .env.*
-!.env.example   # keep example for documentation
+!.env.example
 
 # ============================================
-# Build Output (TypeScript / Production)
+# Build Output
 # ============================================
 dist/
 build/
@@ -22,6 +22,8 @@ build/
 prisma/seed.js
 prisma/seed.js.map
 prisma/migrations/
+
+# DO NOT ignore .prisma, .prisma/client, @prisma, prisma-engines
 
 # ============================================
 # Logs
@@ -39,7 +41,7 @@ yarn-error.log*
 Thumbs.db
 
 # ============================================
-# TypeScript
+# Typescript
 # ============================================
 *.tsbuildinfo
 
