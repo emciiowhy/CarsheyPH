@@ -28,23 +28,32 @@ import promotionRoutes from "./routes/promotion.routes.js";
 import uploadRoutes from "./routes/upload.routes.js";
 import branchRoutes from "./routes/branch.routes.js";
 
-// Load environment variables
 dotenv.config();
 
 const app = express();
-// Add this right after creating your Express app
-app.set('trust proxy', 1); // Trust first proxy (Render's proxy)
+app.set("trust proxy", 1);
 const PORT = Number(process.env.PORT) || 5000;
-
 
 // ----------------------------------------
 // HTTP SERVER → Required for Socket.io
 // ----------------------------------------
 const server = http.createServer(app);
+
+// ⭐ Initialize Socket.io
+const io = new Server(server, {
+  cors: {
+    origin: process.env.FRONTEND_URL || "https://carshey-philippines.vercel.app",
+    methods: ["GET", "POST"],
+    credentials: true
+  }
+});
+
+// Load socket handlers
+initSocket(io);
+
 // ----------------------------------------
 // EXPRESS MIDDLEWARE
 // ----------------------------------------
-
 app.use(securityHeaders);
 app.use(cors(corsOptions));
 app.use("/api", rateLimiter(100, 15 * 60 * 1000));
@@ -67,7 +76,6 @@ app.get("/health", (_req, res) => {
   });
 });
 
-// Simple root test
 app.get("/", (_req, res) => res.send("Backend running with Socket.io enabled"));
 
 // ----------------------------------------
@@ -83,13 +91,12 @@ app.use("/api/promotions", promotionRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/branches", branchRoutes);
 
-// Serve static uploads
 app.use("/uploads", express.static("uploads"));
 
-// 404 Handler
-app.use((_req, res) => res.status(404).json({ success: false, message: "Route not found" }));
+app.use((_req, res) =>
+  res.status(404).json({ success: false, message: "Route not found" })
+);
 
-// Error handler
 app.use(errorHandler);
 
 // ----------------------------------------
