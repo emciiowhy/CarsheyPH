@@ -8,12 +8,10 @@
     "build": "npx prisma generate && tsc",
     "start": "node dist/server.js",
     "start:prod": "npm run build && node dist/server.js",
-
     "prisma:generate": "node --no-warnings ./node_modules/prisma/build/index.js generate",
     "prisma:push": "prisma db push",
     "prisma:studio": "prisma studio",
     "prisma:seed": "tsx prisma/seed.ts",
-
     "lint": "eslint . --ext .ts",
     "check": "npm run lint && tsc --noEmit"
   },
@@ -23,9 +21,8 @@
   "dependencies": {
     "@clerk/clerk-sdk-node": "^4.13.11",
     "@neondatabase/serverless": "^1.0.2",
-    "@prisma/adapter-neon": "^7.0.0",
     "@prisma/adapter-pg": "^7.0.0",
-    "@prisma/client": "^7.0.0",
+    "@prisma/client": "^5.15.0",
     "aws-sdk": "^2.1497.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
@@ -35,7 +32,7 @@
     "hpp": "^0.2.3",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
-    "prisma": "^7.0.0",
+    "prisma": "^5.15.0",
     "slugify": "^1.6.6",
     "socket.io": "^4.6.1",
     "ws": "^8.18.3",
