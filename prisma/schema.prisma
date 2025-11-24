@@ -1,13 +1,16 @@
-//prisma/schema.prisma
+/prisma/schema.prisma
 
+// prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
+
 
 
 
